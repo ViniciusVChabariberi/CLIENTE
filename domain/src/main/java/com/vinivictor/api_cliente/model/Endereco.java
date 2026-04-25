@@ -1,16 +1,17 @@
-package com.vinivictor.api_cliente.repository.orm;
+package com.vinivictor.api_cliente.model;
 
-public class EnderecoMongo {
-    private String zipCode;
+public class Endereco {
     private String logradouro;
+    private String numero;
     private String cidade;
     private String estado;
 
-    // Getters e Setters
-    public String getZipCode() { return zipCode; }
-    public void setZipCode(String zipCode) { this.zipCode = zipCode; }
+    public Endereco() {}
+
     public String getLogradouro() { return logradouro; }
     public void setLogradouro(String logradouro) { this.logradouro = logradouro; }
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
     public String getCidade() { return cidade; }
     public void setCidade(String cidade) { this.cidade = cidade; }
     public String getEstado() { return estado; }

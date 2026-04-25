@@ -1,7 +1,11 @@
 package com.vinivictor.api_cliente.repository;
 
-import com.vinivictor.api_cliente.entity.Cliente;
+import com.vinivictor.api_cliente.model.Cliente;
+import java.util.List;
 
 public interface ClienteRepository {
-    // Veja se o nome aqui é salvarNovoCliente
-    Cliente salvarNovoCliente(Cliente cliente);}
+    Cliente salvarNovoCliente(Cliente cliente);
+    List<Cliente> buscarTodos();
+    Cliente buscarPorId(String id);
+    void deletar(String id);
+}

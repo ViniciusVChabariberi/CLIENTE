@@ -1,45 +1,27 @@
 package com.vinivictor.api_cliente.controller;
 
-import com.vinivictor.api_cliente.entity.Cliente;
-import com.vinivictor.api_cliente.entity.Endereco;
-import com.vinivictor.api_cliente.integration.EnderecoIntegration;
-import com.vinivictor.api_cliente.repository.ClienteRepository;
-import org.springframework.http.HttpStatus;
+import com.vinivictor.api_cliente.model.Cliente; // Import do Domain
+import com.vinivictor.api_cliente.repository.ClienteRepository; // Import do Domain
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/v1/cadastro-clientes") // Mudei a rota para ser diferente da dele
+@RequestMapping("/v1/clientes")
 public class ClienteController {
 
-    private final ClienteRepository portaRepositorio;
-    private final EnderecoIntegration portaIntegracao;
-
-    // Injeção de dependência via construtor (Boa prática)
-    public ClienteController(ClienteRepository portaRepositorio, EnderecoIntegration portaIntegracao) {
-        this.portaRepositorio = portaRepositorio;
-        this.portaIntegracao = portaIntegracao;
-    }
+    @Autowired
+    private ClienteRepository repository;
 
     @PostMapping("/salvar")
-    public ResponseEntity<Cliente> realizarCadastro(@RequestBody Cliente novoCliente) {
-
-        // 1. Pega o CEP enviado no JSON
-        String cepInformado = novoCliente.getEndereco().getCep();
-
-        // 2. Usa o Adapter de Integração para completar os dados do endereço
-        Endereco enderecoCompleto = portaIntegracao.buscarDetalhesCep(cepInformado);
-        novoCliente.setEndereco(enderecoCompleto);
-
-        // 3. Usa o Adapter de Repositório para salvar no MongoDB
-        Cliente clienteSalvo = portaRepositorio.salvarNovoCliente(novoCliente);
-
-        // 4. Retorna o status 201 (Created) para ser mais profissional
-        return new ResponseEntity<>(clienteSalvo, HttpStatus.CREATED);
+    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
+        return ResponseEntity.ok(repository.salvarNovoCliente(cliente));
     }
 
-    @GetMapping("/status")
-    public String checarConexao() {
-        return "API de Clientes online e operante!";
+    @GetMapping("/listar")
+    public ResponseEntity<List<Cliente>> listar() {
+        return ResponseEntity.ok(repository.buscarTodos());
     }
 }

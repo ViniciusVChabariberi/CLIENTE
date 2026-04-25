@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-// Adicione estas duas linhas abaixo:
 @ComponentScan(basePackages = "com.vinivictor.api_cliente")
 @EnableMongoRepositories(basePackages = "com.vinivictor.api_cliente.repository.mongo")
 public class ApplicationMain {
