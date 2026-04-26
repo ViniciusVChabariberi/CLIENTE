@@ -2,10 +2,11 @@ package com.vinivictor.api_cliente.repository;
 
 import com.vinivictor.api_cliente.model.Cliente;
 import java.util.List;
+import java.util.Optional;
 
 public interface ClienteRepository {
-    Cliente salvarNovoCliente(Cliente cliente);
-    List<Cliente> buscarTodos();
-    Cliente buscarPorId(String id);
-    void deletar(String id);
+    Cliente save(Cliente cliente);
+    List<Cliente> findAll();
+    Optional<Cliente> findById(String id);
+    void delete(String id);
 }

@@ -1,8 +1,10 @@
-package com.vinivictor.api_cliente.model;
+package com.vinivictor.api_cliente.repository.orm;
 
-public record Endereco(
+public record EnderecoOrmMongo(
         String logradouro,
         String numero,
         String cidade,
         String estado
-) {}
+) {
+
+}

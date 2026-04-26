@@ -1,43 +1,30 @@
 package com.vinivictor.api_cliente.repository.adapter;
 
 import com.vinivictor.api_cliente.model.Cliente;
-import com.vinivictor.api_cliente.repository.ClienteRepository;
-import com.vinivictor.api_cliente.repository.mongo.ClienteEntity;
-import com.vinivictor.api_cliente.repository.mongo.ClienteMongoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.vinivictor.api_cliente.model.Endereco;
+import com.vinivictor.api_cliente.repository.orm.ClienteOrmMongo;
+import com.vinivictor.api_cliente.repository.orm.EnderecoOrmMongo;
 
-import java.util.List;
-import java.util.stream.Collectors;
+public class ClienteRepositoryAdapter {
+    private ClienteRepositoryAdapter() {}
 
-@Component
-public class ClienteRepositoryAdapter implements ClienteRepository {
-
-    @Autowired
-    private ClienteMongoRepository mongoRepository;
-
-    @Override
-    public Cliente salvarNovoCliente(Cliente cliente) {
-        ClienteEntity entity = new ClienteEntity(cliente);
-        return mongoRepository.save(entity).toDomain();
+    public static ClienteOrmMongo castEntity(Cliente cliente) {
+        EnderecoOrmMongo endOrm = new EnderecoOrmMongo(
+                cliente.endereco().logradouro(),
+                cliente.endereco().numero(),
+                cliente.endereco().cidade(),
+                cliente.endereco().estado()
+        );
+        return new ClienteOrmMongo(cliente.id(), cliente.nome(), cliente.dataNascimento(), endOrm);
     }
 
-    @Override
-    public List<Cliente> buscarTodos() {
-        return mongoRepository.findAll().stream()
-                .map(ClienteEntity::toDomain)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Cliente buscarPorId(String id) {
-        return mongoRepository.findById(id)
-                .map(ClienteEntity::toDomain)
-                .orElse(null);
-    }
-
-    @Override
-    public void deletar(String id) {
-        mongoRepository.deleteById(id);
+    public static Cliente castOrm(ClienteOrmMongo orm) {
+        Endereco endereco = new Endereco(
+                orm.endereco().logradouro(),
+                orm.endereco().numero(),
+                orm.endereco().cidade(),
+                orm.endereco().estado()
+        );
+        return new Cliente(orm.id(), orm.nome(), orm.dataNascimento(), endereco);
     }
 }
