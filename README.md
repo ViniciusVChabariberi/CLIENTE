@@ -12,4 +12,4 @@ Microsserviço responsável pelo gerenciamento de dados cadastrais dos clientes.
 - Consulta de clientes para suporte ao processo de venda.
 
 ## 📸 Evidências de Teste
-![Cadastro de Cliente](screenshots/Captura%20de%20tela%202026-04-26%20102911.png)
+![Cadastro de Cliente](screenshots/Cadastro_Cliente.png)
